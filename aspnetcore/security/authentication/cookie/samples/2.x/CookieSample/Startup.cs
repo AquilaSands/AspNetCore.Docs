@@ -4,11 +4,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace CookieSample
 {
     public class Startup
     {
+        private readonly ILogger _logger;
+
+        public Startup(ILogger<Startup> logger)
+        {
+            _logger = logger;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -26,7 +34,12 @@ namespace CookieSample
 
             #region snippet1
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
+                .AddCookie(options =>
+                {
+                    options.EventsType = typeof(CustomCookieAuthenticationEvents);
+                });
+
+            services.AddScoped<CustomCookieAuthenticationEvents>();
             #endregion
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -36,8 +49,9 @@ namespace CookieSample
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseExceptionHandler("/Error");
+                //app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
             }
             else
             {
@@ -45,14 +59,35 @@ namespace CookieSample
                 app.UseHsts();
             }
 
+            app.Use(async (context, next) =>
+            {
+                _logger.LogInformation("After UseExceptionHandler(): Pre next pipeline step: Request path {Path}", context.Request.Path);
+                await next();
+                _logger.LogInformation("After UseExceptionHandler(): Post next pipeline step: Request path {Path}", context.Request.Path);
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.Use(async (context, next) =>
+            {
+                _logger.LogInformation("Before UseAuthentication(): Pre next pipeline step: Request path {Path}", context.Request.Path);
+                await next();
+                _logger.LogInformation("Before UseAuthentication(): Post next pipeline step: Request path {Path}", context.Request.Path);
+            });
 
             // Call UseAuthentication before calling UseMVC.
             #region snippet2
             app.UseAuthentication();
             #endregion
+
+            app.Use(async (context, next) =>
+            {
+                _logger.LogInformation("After UseAuthentication(): Pre next pipeline step: Request path {Path}", context.Request.Path);
+                await next();
+                _logger.LogInformation("After UseAuthentication(): Post next pipeline step: Request path {Path}", context.Request.Path);
+            });
 
             app.UseMvc();
         }
