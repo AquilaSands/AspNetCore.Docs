@@ -534,11 +534,11 @@
     - name: gRPC services with C#
       uid: grpc/basics
     - name: gRPC services with ASP.NET Core
-      uid: grpc/client
-    - name: Calling services with .NET gRPC client
-      uid: grpc/clientfactory
-    - name: gRPC client factory integration
       uid: grpc/aspnetcore
+    - name: Calling services with .NET gRPC client
+      uid: grpc/client
+    - name: gRPC client factory integration
+      uid: grpc/clientfactory
     - name: Configuration
       uid: grpc/configuration
     - name: Authentication and authorization

@@ -12,9 +12,13 @@ uid: grpc/client
 A .NET gRPC client library is available in the [Grpc.Net.Client](https://www.nuget.org/packages/Grpc.Net.Client) NuGet package. This document shows how to:
 
 * Configure .NET gRPC client to call gRPC services
-* Make gRPC calls to unary, server streaming, client streaming and bi-direction streaming methods
+* Make gRPC calls to different gRPC method types:
+   * Unary
+   * Server streaming
+   * Client streaming
+   * Bi-direction streaming
 
-If you are calling gRPC service from an ASP.NET Core app, consider [gRPC client factory integration in .NET Core](xref:grpc/clientfactory>). gRPC integration with HttpClientFactory offers a centralized alternative to creating gRPC clients.
+If you are calling gRPC service from an ASP.NET Core app, consider [gRPC client factory integration in .NET Core](xref:grpc/clientfactory). gRPC integration with HttpClientFactory offers a centralized alternative to creating gRPC clients.
 
 ## Configure gRPC client
 
