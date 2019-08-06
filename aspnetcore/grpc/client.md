@@ -34,7 +34,7 @@ var channel = channelBuilder.Build();
 var client = new Greet.GreeterClient(channel);
 ```
 
-A channel represents a long-lived connection to a gRPC service. When a channel is created it can be configured with options related to calling a service. For example, the `HttpClient` used to make calls, the maximum send and receive message size, and logging. Visit [Client Configuration]() for a complete list of channel configuration options.
+A channel represents a long-lived connection to a gRPC service. When a channel is created it can be configured with options related to calling a service. For example, the `HttpClient` used to make calls, the maximum send and receive message size, and logging. Visit [Client Configuration](xref:grpc/clientfactory#configure-client-options) for a complete list of channel configuration options.
 
 Multiple gRPC clients can be created from a channel, including different types of clients. Reusing a channel is recommended for best performance. Strongly typed gRPC clients are light-weight objects and can be created when needed.
 
