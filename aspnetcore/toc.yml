@@ -534,6 +534,10 @@
     - name: gRPC services with C#
       uid: grpc/basics
     - name: gRPC services with ASP.NET Core
+      uid: grpc/client
+    - name: Calling services with .NET gRPC client
+      uid: grpc/clientfactory
+    - name: gRPC client factory integration
       uid: grpc/aspnetcore
     - name: Configuration
       uid: grpc/configuration
@@ -541,7 +545,7 @@
       uid: grpc/authn-and-authz
     - name: Security considerations
       uid: grpc/security
-    - name: Migrating gRPC services from C Core to ASP.NET Core
+    - name: Migrating gRPC services from C Core
       uid: grpc/migration
     - name: Comparing gRPC services with HTTP APIs
       uid: grpc/comparison
